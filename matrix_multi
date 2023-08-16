@@ -1,0 +1,29 @@
+proc matrix_multiply {mat1 mat2} {
+    set result {}
+    for {set i 0} {$i < [llength $mat1]} {incr i} {
+        set row {}
+        for {set j 0} {$j < [llength [lindex $mat2 0]]} {incr j} {
+            set sum 0
+            for {set k 0} {$k < [llength [lindex $mat2 $j]]} {incr k} {
+                set sum [expr {$sum + [lindex $mat1 $i $k] * [lindex [lindex $mat2 $j] $k]}]
+            }
+            lappend row $sum
+        }
+        lappend result $row
+    }
+    return $result
+}
+set matrix1 {{1 2 3} {4 5 6}}
+set matrix2 {{7 8} {9 10} {11 12}}
+
+ set n 3
+set result $matrix1
+for {set i 1} {$i < $n} {incr i} {
+    set result [matrix_multiply $result $matrix2]
+}
+puts "Result after $n matrix multiplications:"
+foreach row $result {
+    puts [join $row "\t"]
+}
+
+
